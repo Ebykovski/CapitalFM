@@ -1,1 +1,1 @@
-module.exports={"dependencies":{},"radio_url":"http://91.203.224.110:8000/rd128"};
+module.exports={"dependencies":{},"radio_url":"http://91.203.224.110:8000/rd128","now_played_url":"http://91.203.224.110:8000/rd128.xspf","twitter":{"enabled":true,"api_key":"wHhi5fE5kiNn67epb8SA","api_secret":"ls1PKpxdJ3jRswl7P3dkjct8dJVnwqdutiTdW3Qbi8","screen_name":"CapitalVRN"}};

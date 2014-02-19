@@ -1,62 +1,62 @@
 ".container": {
-	backgroundImage: "bg_sm.png",
+	backgroundImage: "/images/bg_sm.png",
 	layout : "vertical",
 	navBarHidden:true,
 	orientationModes: [Titanium.UI.PORTRAIT]
 },
 
 ".container[platform=ios formFactor=tablet]": {
-	backgroundImage: "bg_ipad.png",
+	backgroundImage: "/images/bg_ipad.png",
 },
 
 "#logo":{
-	image : "big_logo.png",
+	image : "/images/big_logo.png",
 	top : "40dp"
 },
 
 "#logo[platform=ios formFactor=tablet]" : {
-	image : "big_logo_lg.png",
+	image : "/images/big_logo_lg.png",
 	top: "100dp"
 },
 
 "#menu" : {
 	top: "5dp",
-	backgroundImage : "menu_bg.png",
+	backgroundImage : "/images/menu_bg.png",
 	height : "112dp"
 },
 
 "#menu[platform=ios formFactor=tablet]" : {
 	top : "10dp",
-	backgroundImage : "menu_bg_lg.png",
+	backgroundImage : "/images/menu_bg_lg.png",
 	height : "224dp"
 },
 
 "#playButton" : {
-	backgroundImage : "play_button_on.png",
+	backgroundImage : "/images/play_button_on.png",
 	width : "106dp",
 	height : "112dp"
 },
 
 "#playButton[platform=ios formFactor=tablet]":{
-	backgroundImage : "play_button_on_lg.png",
+	backgroundImage : "/images/play_button_on_lg.png",
 		width : "212dp",
 	height : "224dp"
 },
 
 ".statePlays" : {
-	backgroundImage : "play_button_on.png"
+	backgroundImage : "/images/play_button_on.png"
 },
 
 ".statePlays[platform=ios formFactor=tablet]" : {
-	backgroundImage : "play_button_on_lg.png"
+	backgroundImage : "/images/play_button_on_lg.png"
 },
 
 ".stateStop" : {
-	backgroundImage : "play_button_off.png"
+	backgroundImage : "/images/play_button_off.png"
 },
 
 ".stateStop[platform=ios formFactor=tablet]" : {
-	backgroundImage : "play_button_off_lg.png"
+	backgroundImage : "/images/play_button_off_lg.png"
 },
 
 "#nowplayed" : {
@@ -86,7 +86,18 @@
 	height : "60dp"
 },
 
+"#nowplayed[platform=android]" : {
+	left : "15dp",
+	right : "15dp",
+	height : "14dp",
+	font : {
+		fontSize : "13dp", 
+		fontFamily : "LiberationMono-Regular"
+	}
+}
+
 "#twitterPanel": {
+	layout: "horizontal",
 	top: "30dp",
 	left: "10dp",
 	right: "20dp",
@@ -95,9 +106,11 @@
 },
 
 "#twitterLogo" : {
-	image: "tweet.png",
+	image: "/images/tweet.png",
 	top : "0",
-	width : "40dp"
+	width : "40dp",
+	borderWidth : "1",
+	borderColor : "red"
 },
 
 "#twitterMessages": {
@@ -106,6 +119,10 @@
 	separatorColor : "transparent",
 	left : "10dp"
 },
+
+"#twitterMessages[platform=android]": {
+	borderRadius : "10",
+}
 
 ".msgItem": {
 	backgroundColor : "transparent",

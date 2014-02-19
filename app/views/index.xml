@@ -1,11 +1,11 @@
 <Alloy>
-	<Window class="container" onClose="onWinClose">
+	<Window class="container" onClose="onWinClose" exitOnClose="true">
 		<ImageView id="logo"></ImageView>
 		<Label id="nowplayed"></Label>
 		<View id="menu">
 			<Button id="playButton" onClick="playRadio"></Button>
 		</View>
-		<View id="twitterPanel" layout="horizontal">
+		<View id="twitterPanel">
 			<ImageView id="twitterLogo"></ImageView>
 			<ListView id="twitterMessages" defaultItemTemplate="template">
 				<Templates>
