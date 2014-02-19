@@ -1,0 +1,25 @@
+<Alloy>
+	<Window class="container" onClose="onWinClose">
+		<ImageView id="logo"></ImageView>
+		<Label id="nowplayed"></Label>
+		<View id="menu">
+			<Button id="playButton" onClick="playRadio"></Button>
+		</View>
+		<View id="twitterPanel" layout="horizontal">
+			<ImageView id="twitterLogo"></ImageView>
+			<ListView id="twitterMessages" defaultItemTemplate="template">
+				<Templates>
+					<ItemTemplate name="template" class="msgItem">
+						<View class="msgWrap">
+							<Label bindId="message" class="msg msgBody" />
+							<Label bindId="date" class="msg msgDate" />
+						</View>
+					</ItemTemplate>
+				</Templates>
+				<ListSection>
+					<ListItem message:text="Загрузка твитов..."  />
+				</ListSection>
+			</ListView>
+		</View>
+	</Window>
+</Alloy>

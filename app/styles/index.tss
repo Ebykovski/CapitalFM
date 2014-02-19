@@ -1,0 +1,144 @@
+".container": {
+	backgroundImage: "bg_sm.png",
+	layout : "vertical",
+	navBarHidden:true,
+	orientationModes: [Titanium.UI.PORTRAIT]
+},
+
+".container[platform=ios formFactor=tablet]": {
+	backgroundImage: "bg_ipad.png",
+},
+
+"#logo":{
+	image : "big_logo.png",
+	top : "40dp"
+},
+
+"#logo[platform=ios formFactor=tablet]" : {
+	image : "big_logo_lg.png",
+	top: "100dp"
+},
+
+"#menu" : {
+	top: "5dp",
+	backgroundImage : "menu_bg.png",
+	height : "112dp"
+},
+
+"#menu[platform=ios formFactor=tablet]" : {
+	top : "10dp",
+	backgroundImage : "menu_bg_lg.png",
+	height : "224dp"
+},
+
+"#playButton" : {
+	backgroundImage : "play_button_on.png",
+	width : "106dp",
+	height : "112dp"
+},
+
+"#playButton[platform=ios formFactor=tablet]":{
+	backgroundImage : "play_button_on_lg.png",
+		width : "212dp",
+	height : "224dp"
+},
+
+".statePlays" : {
+	backgroundImage : "play_button_on.png"
+},
+
+".statePlays[platform=ios formFactor=tablet]" : {
+	backgroundImage : "play_button_on_lg.png"
+},
+
+".stateStop" : {
+	backgroundImage : "play_button_off.png"
+},
+
+".stateStop[platform=ios formFactor=tablet]" : {
+	backgroundImage : "play_button_off_lg.png"
+},
+
+"#nowplayed" : {
+	top : "10dp",
+	// backgroundColor : "#33ffffff",
+	left : "10dp",
+	right : "10dp",
+	font : {
+		fontSize : "14dp", 
+		fontFamily : "Liberation Mono"
+	},
+	color : "#555",
+	height : "20dp",
+	textAlign : Ti.UI.TEXT_ALIGNMENT_LEFT,
+	shadowOffset : {x:1,y:1},
+	shadowColor: "#88ffffff"
+},
+
+"#nowplayed[platform=ios formFactor=tablet]" : {
+	top : "20dp",
+	left : "65dp",
+	right : "65dp",
+	font : {
+		fontSize : "30dp", 
+		fontFamily : "Liberation Mono"
+	},
+	height : "60dp"
+},
+
+"#twitterPanel": {
+	top: "30dp",
+	left: "10dp",
+	right: "20dp",
+	bottom : "20dp",
+	height: Ti.UI.FILL
+},
+
+"#twitterLogo" : {
+	image: "tweet.png",
+	top : "0",
+	width : "40dp"
+},
+
+"#twitterMessages": {
+	backgroundColor : "#33ffffff",
+	borderRadius : "10dp",
+	separatorColor : "transparent",
+	left : "10dp"
+},
+
+".msgItem": {
+	backgroundColor : "transparent",
+	height: Ti.UI.SIZE,
+	rigth : "10dp",
+	left : "10dp"
+},
+
+".msgWrap": {
+	backgroundColor : "transparent",
+	layout : "vertical",
+	height: Ti.UI.SIZE,
+	left : "10dp",
+	right : "10dp",
+	top : "10dp"
+},
+
+".msg": {
+	color : 'white',
+	backgroundColor : "transparent",
+	width : Ti.UI.FILL
+}
+
+".msgDate" : {
+	top : "5dp",
+	font : {
+		fontSize : "12dp"
+	},
+	textAlign : Ti.UI.TEXT_ALIGNMENT_RIGHT
+},
+
+".msgBody" : {
+	font : {
+		fontSize : "13dp"
+	}
+}
