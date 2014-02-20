@@ -5,7 +5,7 @@
 	orientationModes: [Titanium.UI.PORTRAIT]
 },
 
-".container[platform=ios formFactor=tablet]": {
+".container[formFactor=tablet]": {
 	backgroundImage: "/images/bg_ipad.png",
 },
 
@@ -14,14 +14,22 @@
 	top : "40dp"
 },
 
-"#logo[platform=ios formFactor=tablet]" : {
+"#logo[formFactor=tablet]" : {
 	image : "/images/big_logo_lg.png",
 	top: "100dp"
 },
 
+"#logo[platform=android]":{
+	width : "275dp",
+	height: "65dp",
+	image : "/images/big_logo_lg.png"
+}
+
 "#logo[platform=android formFactor=tablet]" : {
-	image : "/images/big_logo_lg.png",
-	top: "100dp"
+	top: "80dp",
+	width : "550dp",
+	height: "130dp",
+	image : "/images/big_logo_lg@2x.png"
 },
 
 "#menu" : {
@@ -30,10 +38,14 @@
 	height : "112dp"
 },
 
-"#menu[platform=ios formFactor=tablet]" : {
+"#menu[formFactor=tablet]" : {
 	top : "10dp",
 	backgroundImage : "/images/menu_bg_lg.png",
 	height : "224dp"
+},
+
+"#menu[platform=android]" : {
+	backgroundImage : "/images/menu_bg_lg.png",
 },
 
 "#playButton" : {
@@ -42,17 +54,25 @@
 	height : "112dp"
 },
 
-"#playButton[platform=ios formFactor=tablet]":{
+"#playButton[formFactor=tablet]":{
 	backgroundImage : "/images/play_button_on_lg.png",
-		width : "212dp",
+	width : "212dp",
 	height : "224dp"
 },
+
+"#playButton[platform=android]": {
+	backgroundImage : "/images/play_button_on_lg.png"
+}
 
 ".statePlays" : {
 	backgroundImage : "/images/play_button_on.png"
 },
 
-".statePlays[platform=ios formFactor=tablet]" : {
+".statePlays[formFactor=tablet]" : {
+	backgroundImage : "/images/play_button_on_lg.png"
+},
+
+".statePlays[platform=android]" : {
 	backgroundImage : "/images/play_button_on_lg.png"
 },
 
@@ -60,7 +80,11 @@
 	backgroundImage : "/images/play_button_off.png"
 },
 
-".stateStop[platform=ios formFactor=tablet]" : {
+".stateStop[formFactor=tablet]" : {
+	backgroundImage : "/images/play_button_off_lg.png"
+},
+
+".stateStop[platform=android]" : {
 	backgroundImage : "/images/play_button_off_lg.png"
 },
 
@@ -80,7 +104,7 @@
 	shadowColor: "#88ffffff"
 },
 
-"#nowplayed[platform=ios formFactor=tablet]" : {
+"#nowplayed[formFactor=tablet]" : {
 	top : "20dp",
 	left : "65dp",
 	right : "65dp",
@@ -97,6 +121,16 @@
 	height : "14dp",
 	font : {
 		fontSize : "13dp", 
+		fontFamily : "LiberationMono-Regular"
+	}
+}
+
+"#nowplayed[platform=android formFactor=tablet]" : {
+	left : "50dp",
+	right : "40dp",
+	height : "30dp",
+	font : {
+		fontSize : "24dp", 
 		fontFamily : "LiberationMono-Regular"
 	}
 }
@@ -123,10 +157,14 @@
 	width : "40dp"
 },
 
-"#twitterLogo[platform=ios formFactor=tablet]" : {
+"#twitterLogo[formFactor=tablet]" : {
 	image: "/images/tweet_lg.png",
 	top : "0",
 	width : "80dp"
+},
+
+"#twitterLogo[platform=android]" : {
+	image: "/images/tweet_lg.png",
 },
 
 "#twitterMessages": {
@@ -177,7 +215,7 @@
 	textAlign : Ti.UI.TEXT_ALIGNMENT_RIGHT
 },
 
-".msgDate[platform=ios formFactor=tablet]" : {
+".msgDate[formFactor=tablet]" : {
 	top : "10dp",
 	font : {
 		fontSize : "15dp"
@@ -191,7 +229,7 @@
 	}
 }
 
-".msgBody[platform=ios formFactor=tablet]" : {
+".msgBody[formFactor=tablet]" : {
 	font : {
 		fontSize : "18dp"
 	}
