@@ -17,11 +17,21 @@ function Controller() {
     });
     $.__views.index && $.addTopLevelView($.__views.index);
     onWinClose ? $.__views.index.addEventListener("close", onWinClose) : __defers["$.__views.index!close!onWinClose"] = true;
-    $.__views.logo = Ti.UI.createImageView({
-        image: "/images/big_logo.png",
-        top: "40dp",
-        id: "logo"
-    });
+    $.__views.logo = Ti.UI.createImageView(function() {
+        var o = {};
+        _.extend(o, {
+            image: "/images/big_logo.png",
+            top: "40dp"
+        });
+        Alloy.isTablet && _.extend(o, {
+            image: "/images/big_logo_lg.png",
+            top: "100dp"
+        });
+        _.extend(o, {
+            id: "logo"
+        });
+        return o;
+    }());
     $.__views.index.add($.__views.logo);
     $.__views.nowplayed = Ti.UI.createLabel({
         top: "10dp",
@@ -57,22 +67,29 @@ function Controller() {
     });
     $.__views.menu.add($.__views.playButton);
     playRadio ? $.__views.playButton.addEventListener("click", playRadio) : __defers["$.__views.playButton!click!playRadio"] = true;
-    $.__views.twitterPanel = Ti.UI.createView({
-        layout: "horizontal",
-        top: "30dp",
-        left: "10dp",
-        right: "20dp",
-        bottom: "20dp",
-        height: Ti.UI.FILL,
-        id: "twitterPanel"
-    });
+    $.__views.twitterPanel = Ti.UI.createView(function() {
+        var o = {};
+        _.extend(o, {
+            layout: "horizontal",
+            top: "30dp",
+            left: "10dp",
+            right: "10dp",
+            height: Ti.UI.FILL
+        });
+        Alloy.isTablet && _.extend(o, {
+            left: "10dp",
+            right: "20dp"
+        });
+        _.extend(o, {
+            id: "twitterPanel"
+        });
+        return o;
+    }());
     $.__views.index.add($.__views.twitterPanel);
     $.__views.twitterLogo = Ti.UI.createImageView({
         image: "/images/tweet.png",
         top: "0",
         width: "40dp",
-        borderWidth: "1",
-        borderColor: "red",
         id: "twitterLogo"
     });
     $.__views.twitterPanel.add($.__views.twitterLogo);
@@ -103,7 +120,6 @@ function Controller() {
                     color: "white",
                     backgroundColor: "transparent",
                     width: Ti.UI.FILL,
-                    top: "5dp",
                     font: {
                         fontSize: "12dp"
                     },
@@ -115,7 +131,6 @@ function Controller() {
             return __alloyId6;
         }(),
         properties: {
-            backgroundColor: "transparent",
             layout: "vertical",
             height: Ti.UI.SIZE,
             left: "10dp",
@@ -128,8 +143,6 @@ function Controller() {
         properties: {
             backgroundColor: "transparent",
             height: Ti.UI.SIZE,
-            rigth: "10dp",
-            left: "10dp",
             name: "template"
         },
         childTemplates: __alloyId3
@@ -151,16 +164,29 @@ function Controller() {
     $.__views.__alloyId11.items = __alloyId13;
     var __alloyId15 = [];
     __alloyId15.push($.__views.__alloyId11);
-    $.__views.twitterMessages = Ti.UI.createListView({
-        backgroundColor: "#33ffffff",
-        borderRadius: "10",
-        separatorColor: "transparent",
-        left: "10dp",
-        sections: __alloyId15,
-        templates: __alloyId0,
-        id: "twitterMessages",
-        defaultItemTemplate: "template"
-    });
+    $.__views.twitterMessages = Ti.UI.createListView(function() {
+        var o = {};
+        _.extend(o, {
+            backgroundColor: "#33ffffff",
+            borderRadius: "10dp",
+            separatorColor: "transparent",
+            left: "10dp",
+            bottom: "10dp",
+            width: Ti.UI.FILL,
+            height: Ti.UI.FILL
+        });
+        Alloy.isTablet && _.extend(o, {
+            bottom: "20dp"
+        });
+        _.extend(o, {
+            borderRadius: "10",
+            sections: __alloyId15,
+            templates: __alloyId0,
+            id: "twitterMessages",
+            defaultItemTemplate: "template"
+        });
+        return o;
+    }());
     $.__views.twitterPanel.add($.__views.twitterMessages);
     exports.destroy = function() {};
     _.extend($, $.__views);

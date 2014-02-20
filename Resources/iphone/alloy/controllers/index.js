@@ -10,15 +10,16 @@ function Controller() {
     $.__views.index = Ti.UI.createWindow(function() {
         var o = {};
         _.extend(o, {
-            backgroundImage: "bg_sm.png",
+            backgroundImage: "/images/bg_sm.png",
             layout: "vertical",
             navBarHidden: true,
             orientationModes: [ Titanium.UI.PORTRAIT ]
         });
         Alloy.isTablet && _.extend(o, {
-            backgroundImage: "bg_ipad.png"
+            backgroundImage: "/images/bg_ipad.png"
         });
         _.extend(o, {
+            exitOnClose: "true",
             id: "index"
         });
         return o;
@@ -28,11 +29,11 @@ function Controller() {
     $.__views.logo = Ti.UI.createImageView(function() {
         var o = {};
         _.extend(o, {
-            image: "big_logo.png",
+            image: "/images/big_logo.png",
             top: "40dp"
         });
         Alloy.isTablet && _.extend(o, {
-            image: "big_logo_lg.png",
+            image: "/images/big_logo_lg.png",
             top: "100dp"
         });
         _.extend(o, {
@@ -80,12 +81,12 @@ function Controller() {
         var o = {};
         _.extend(o, {
             top: "5dp",
-            backgroundImage: "menu_bg.png",
+            backgroundImage: "/images/menu_bg.png",
             height: "112dp"
         });
         Alloy.isTablet && _.extend(o, {
             top: "10dp",
-            backgroundImage: "menu_bg_lg.png",
+            backgroundImage: "/images/menu_bg_lg.png",
             height: "224dp"
         });
         _.extend(o, {
@@ -97,12 +98,12 @@ function Controller() {
     $.__views.playButton = Ti.UI.createButton(function() {
         var o = {};
         _.extend(o, {
-            backgroundImage: "play_button_on.png",
+            backgroundImage: "/images/play_button_on.png",
             width: "106dp",
             height: "112dp"
         });
         Alloy.isTablet && _.extend(o, {
-            backgroundImage: "play_button_on_lg.png",
+            backgroundImage: "/images/play_button_on_lg.png",
             width: "212dp",
             height: "224dp"
         });
@@ -113,22 +114,42 @@ function Controller() {
     }());
     $.__views.menu.add($.__views.playButton);
     playRadio ? $.__views.playButton.addEventListener("click", playRadio) : __defers["$.__views.playButton!click!playRadio"] = true;
-    $.__views.twitterPanel = Ti.UI.createView({
-        top: "30dp",
-        left: "10dp",
-        right: "20dp",
-        bottom: "20dp",
-        height: Ti.UI.FILL,
-        id: "twitterPanel",
-        layout: "horizontal"
-    });
+    $.__views.twitterPanel = Ti.UI.createView(function() {
+        var o = {};
+        _.extend(o, {
+            layout: "horizontal",
+            top: "30dp",
+            left: "10dp",
+            right: "10dp",
+            height: Ti.UI.FILL
+        });
+        Alloy.isTablet && _.extend(o, {
+            left: "10dp",
+            right: "20dp"
+        });
+        _.extend(o, {
+            id: "twitterPanel"
+        });
+        return o;
+    }());
     $.__views.index.add($.__views.twitterPanel);
-    $.__views.twitterLogo = Ti.UI.createImageView({
-        image: "tweet.png",
-        top: "0",
-        width: "40dp",
-        id: "twitterLogo"
-    });
+    $.__views.twitterLogo = Ti.UI.createImageView(function() {
+        var o = {};
+        _.extend(o, {
+            image: "/images/tweet.png",
+            top: "0",
+            width: "40dp"
+        });
+        Alloy.isTablet && _.extend(o, {
+            image: "/images/tweet_lg.png",
+            top: "0",
+            width: "80dp"
+        });
+        _.extend(o, {
+            id: "twitterLogo"
+        });
+        return o;
+    }());
     $.__views.twitterPanel.add($.__views.twitterLogo);
     var __alloyId0 = {};
     var __alloyId3 = [];
@@ -139,37 +160,59 @@ function Controller() {
             var __alloyId8 = {
                 type: "Ti.UI.Label",
                 bindId: "message",
-                properties: {
-                    color: "white",
-                    backgroundColor: "transparent",
-                    width: Ti.UI.FILL,
-                    font: {
-                        fontSize: "13dp"
-                    },
-                    bindId: "message"
-                }
+                properties: function() {
+                    var o = {};
+                    _.extend(o, {
+                        color: "white",
+                        backgroundColor: "transparent",
+                        width: Ti.UI.FILL,
+                        font: {
+                            fontSize: "13dp"
+                        }
+                    });
+                    Alloy.isTablet && _.extend(o, {
+                        font: {
+                            fontSize: "18dp"
+                        }
+                    });
+                    _.extend(o, {
+                        bindId: "message"
+                    });
+                    return o;
+                }()
             };
             __alloyId6.push(__alloyId8);
             var __alloyId10 = {
                 type: "Ti.UI.Label",
                 bindId: "date",
-                properties: {
-                    color: "white",
-                    backgroundColor: "transparent",
-                    width: Ti.UI.FILL,
-                    top: "5dp",
-                    font: {
-                        fontSize: "12dp"
-                    },
-                    textAlign: Ti.UI.TEXT_ALIGNMENT_RIGHT,
-                    bindId: "date"
-                }
+                properties: function() {
+                    var o = {};
+                    _.extend(o, {
+                        color: "white",
+                        backgroundColor: "transparent",
+                        width: Ti.UI.FILL,
+                        font: {
+                            fontSize: "12dp"
+                        },
+                        textAlign: Ti.UI.TEXT_ALIGNMENT_RIGHT
+                    });
+                    Alloy.isTablet && _.extend(o, {
+                        top: "10dp",
+                        font: {
+                            fontSize: "15dp"
+                        },
+                        textAlign: Ti.UI.TEXT_ALIGNMENT_RIGHT
+                    });
+                    _.extend(o, {
+                        bindId: "date"
+                    });
+                    return o;
+                }()
             };
             __alloyId6.push(__alloyId10);
             return __alloyId6;
         }(),
         properties: {
-            backgroundColor: "transparent",
             layout: "vertical",
             height: Ti.UI.SIZE,
             left: "10dp",
@@ -182,8 +225,6 @@ function Controller() {
         properties: {
             backgroundColor: "transparent",
             height: Ti.UI.SIZE,
-            rigth: "10dp",
-            left: "10dp",
             name: "template"
         },
         childTemplates: __alloyId3
@@ -205,16 +246,28 @@ function Controller() {
     $.__views.__alloyId11.items = __alloyId13;
     var __alloyId15 = [];
     __alloyId15.push($.__views.__alloyId11);
-    $.__views.twitterMessages = Ti.UI.createListView({
-        backgroundColor: "#33ffffff",
-        borderRadius: "10dp",
-        separatorColor: "transparent",
-        left: "10dp",
-        sections: __alloyId15,
-        templates: __alloyId0,
-        id: "twitterMessages",
-        defaultItemTemplate: "template"
-    });
+    $.__views.twitterMessages = Ti.UI.createListView(function() {
+        var o = {};
+        _.extend(o, {
+            backgroundColor: "#33ffffff",
+            borderRadius: "10dp",
+            separatorColor: "transparent",
+            left: "10dp",
+            bottom: "10dp",
+            width: Ti.UI.FILL,
+            height: Ti.UI.FILL
+        });
+        Alloy.isTablet && _.extend(o, {
+            bottom: "20dp"
+        });
+        _.extend(o, {
+            sections: __alloyId15,
+            templates: __alloyId0,
+            id: "twitterMessages",
+            defaultItemTemplate: "template"
+        });
+        return o;
+    }());
     $.__views.twitterPanel.add($.__views.twitterMessages);
     exports.destroy = function() {};
     _.extend($, $.__views);
@@ -274,8 +327,8 @@ function Controller() {
         audioPlayer.stop();
         "android" === Ti.Platform.osname && audioPlayer.release();
     };
-    var newSongTitle = "", scoreboardLength = 35;
-    Ti.Network.createHTTPClient({
+    var songTitle = "", newSongTitle = "", position = 0, scoreboardLength = 35;
+    var client = Ti.Network.createHTTPClient({
         onload: function() {
             var result = this.responseXML;
             newSongTitle = result.getElementsByTagName("trackList").item(0).getElementsByTagName("track").item(0).getElementsByTagName("title").item(0).textContent;
@@ -289,6 +342,19 @@ function Controller() {
         },
         timeout: 1e3
     });
+    var timer = setInterval(function() {
+        if (audioPlayer.playing || audioPlayer.paused) {
+            client.open("GET", Alloy.CFG.now_played_url);
+            client.send();
+        }
+    }, 1e3);
+    var timerPlayed = setInterval(function() {
+        (songTitle !== newSongTitle || position > newSongTitle.length) && (position = 0);
+        $.nowplayed.text = newSongTitle.substr(position, scoreboardLength).toUpperCase();
+        console.log($.nowplayed.text);
+        position++;
+        songTitle = newSongTitle;
+    }, 200);
     var getTweets = function() {
         Alloy.Globals.twitterApi.getTweets(7, function(data) {
             if (data) {
