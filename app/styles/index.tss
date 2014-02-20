@@ -90,24 +90,31 @@
 
 "#nowplayed" : {
 	top : "10dp",
-	// backgroundColor : "#33ffffff",
-	left : "10dp",
-	right : "10dp",
+	width: Ti.UI.FILL,
+	textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,
 	font : {
 		fontSize : "14dp", 
 		fontFamily : "Liberation Mono"
 	},
 	color : "#555",
 	height : "20dp",
-	textAlign : Ti.UI.TEXT_ALIGNMENT_LEFT,
 	shadowOffset : {x:1,y:1},
 	shadowColor: "#88ffffff"
 },
 
-"#nowplayed[formFactor=tablet]" : {
-	top : "20dp",
+"#nowplayed[platform=ios]":{
+	left : "10dp",
+	right : "10dp",
+	textAlign : Ti.UI.TEXT_ALIGNMENT_LEFT
+},
+
+"#nowplayed[platform=ios formFactor=tablet]":{
 	left : "65dp",
 	right : "65dp",
+},
+
+"#nowplayed[formFactor=tablet]" : {
+	top : "20dp",
 	font : {
 		fontSize : "30dp", 
 		fontFamily : "Liberation Mono"
@@ -116,8 +123,6 @@
 },
 
 "#nowplayed[platform=android]" : {
-	left : "15dp",
-	right : "15dp",
 	height : "14dp",
 	font : {
 		fontSize : "13dp", 
@@ -126,8 +131,6 @@
 }
 
 "#nowplayed[platform=android formFactor=tablet]" : {
-	left : "50dp",
-	right : "40dp",
 	height : "30dp",
 	font : {
 		fontSize : "24dp", 
@@ -140,15 +143,12 @@
 	top: "30dp",
 	left: "10dp",
 	right: "10dp",
-	// bottom : "10dp",
-	height: Ti.UI.FILL,
-	// backgroundColor : "#3300ffff"
+	height: Ti.UI.FILL
 },
 
 "#twitterPanel[formFactor=tablet]": {
 	left: "10dp",
-	right: "20dp",
-	// bottom : "20dp"
+	right: "20dp"
 },
 
 "#twitterLogo" : {
@@ -188,12 +188,9 @@
 ".msgItem": {
 	backgroundColor : "transparent",
 	height: Ti.UI.SIZE,
-	// rigth : "10dp",
-	// left : "10dp"
 },
 
 ".msgWrap": {
-	// backgroundColor : "transparent",
 	layout : "vertical",
 	height: Ti.UI.SIZE,
 	left : "10dp",
@@ -208,7 +205,7 @@
 }
 
 ".msgDate" : {
-	// top : "5dp",
+	//height : "15dp",
 	font : {
 		fontSize : "12dp"
 	},
@@ -216,7 +213,7 @@
 },
 
 ".msgDate[formFactor=tablet]" : {
-	top : "10dp",
+	//top : "10dp",
 	font : {
 		fontSize : "15dp"
 	},
@@ -233,4 +230,17 @@
 	font : {
 		fontSize : "18dp"
 	}
+}
+
+"#activityIndicator" : {
+	style: Titanium.UI.iPhone.ActivityIndicatorStyle.BIG
+}
+
+"#activityIndicator[platform=android]" : {
+	top: "15dp",
+	style: Titanium.UI.ActivityIndicatorStyle.BIG
+}
+
+"#activityIndicator[platform=android formFactor=tablet]" : {
+	top: "67dp"
 }

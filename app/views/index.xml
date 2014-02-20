@@ -4,6 +4,7 @@
 		<Label id="nowplayed"></Label>
 		<View id="menu">
 			<Button id="playButton" onClick="playRadio"></Button>
+			<ActivityIndicator id="activityIndicator"/>
 		</View>
 		<View id="twitterPanel">
 			<ImageView id="twitterLogo"></ImageView>

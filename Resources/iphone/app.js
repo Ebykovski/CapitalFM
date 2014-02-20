@@ -10,8 +10,6 @@ Alloy.Globals.twitterApi = new TwitterApi({
     screen_name: Alloy.CFG.twitter.screen_name
 });
 
-Ti.include("date.js");
-
 Alloy.Globals.Utils = require("Utils");
 
 Alloy.createController("index");

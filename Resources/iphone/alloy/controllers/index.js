@@ -46,15 +46,14 @@ function Controller() {
         var o = {};
         _.extend(o, {
             top: "10dp",
-            left: "10dp",
-            right: "10dp",
+            width: Ti.UI.FILL,
+            textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,
             font: {
                 fontSize: "14dp",
                 fontFamily: "Liberation Mono"
             },
             color: "#555",
             height: "20dp",
-            textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
             shadowOffset: {
                 x: 1,
                 y: 1
@@ -63,13 +62,20 @@ function Controller() {
         });
         Alloy.isTablet && _.extend(o, {
             top: "20dp",
-            left: "65dp",
-            right: "65dp",
             font: {
                 fontSize: "30dp",
                 fontFamily: "Liberation Mono"
             },
             height: "60dp"
+        });
+        _.extend(o, {
+            left: "10dp",
+            right: "10dp",
+            textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT
+        });
+        Alloy.isTablet && _.extend(o, {
+            left: "65dp",
+            right: "65dp"
         });
         _.extend(o, {
             id: "nowplayed"
@@ -114,6 +120,11 @@ function Controller() {
     }());
     $.__views.menu.add($.__views.playButton);
     playRadio ? $.__views.playButton.addEventListener("click", playRadio) : __defers["$.__views.playButton!click!playRadio"] = true;
+    $.__views.activityIndicator = Ti.UI.createActivityIndicator({
+        style: Titanium.UI.iPhone.ActivityIndicatorStyle.BIG,
+        id: "activityIndicator"
+    });
+    $.__views.menu.add($.__views.activityIndicator);
     $.__views.twitterPanel = Ti.UI.createView(function() {
         var o = {};
         _.extend(o, {
@@ -197,7 +208,6 @@ function Controller() {
                         textAlign: Ti.UI.TEXT_ALIGNMENT_RIGHT
                     });
                     Alloy.isTablet && _.extend(o, {
-                        top: "10dp",
                         font: {
                             fontSize: "15dp"
                         },
@@ -271,6 +281,7 @@ function Controller() {
     $.__views.twitterPanel.add($.__views.twitterMessages);
     exports.destroy = function() {};
     _.extend($, $.__views);
+    var songTitle = "", newSongTitle = "", position = 0, scoreboardLength = 35, timerGetTweets = null, timerGetNowPlaying = null, timerMarquee = null;
     var mediaControls = require("de.codewave.ti.mediacontrols");
     var mediaControlsView = mediaControls.createView({
         left: 0,
@@ -281,31 +292,25 @@ function Controller() {
     $.index.add(mediaControlsView);
     var nowPlayingInfo = mediaControls.createNowPlayingInfo();
     mediaControlsView.addEventListener("remoteControlPlay", function() {
-        Titanium.API.info("Remote control 'play'.");
         audioPlayer.play();
-        nowPlayingInfo.setTitle("Test Title");
-        nowPlayingInfo.setAlbumTitle("Test Album");
-        nowPlayingInfo.setArtist("Test Artist");
-        nowPlayingInfo.setAlbumArtist("Test Album Artist");
-        nowPlayingInfo.setArtwork("http://www.codewave.de/images/mytunesrss_3d.png");
+        nowPlayingInfo.setTitle("CapitalFM");
+        nowPlayingInfo.setAlbumTitle("CapitalFM");
+        nowPlayingInfo.setArtwork("/images/radio_artwork.png");
     });
     mediaControlsView.addEventListener("remoteControlPause", function() {
-        Titanium.API.info("Remote control 'pause'.");
         audioPlayer.pause();
     });
     mediaControlsView.addEventListener("remoteControlStop", function() {
-        Titanium.API.info("Remote control 'stop'.");
         audioPlayer.stop();
         nowPlayingInfo.clear();
     });
     mediaControlsView.addEventListener("remoteControlTogglePlayPause", function() {
-        Titanium.API.info("Remote control 'toggle play/pause'.");
         audioPlayer.playing ? audioPlayer.pause() : audioPlayer.paused && audioPlayer.play();
     });
     var audioPlayer = Ti.Media.createAudioPlayer({
         url: Alloy.CFG.radio_url,
         allowBackground: true,
-        bufferSize: 64532
+        bufferSize: 65535
     });
     var statePlays = $.createStyle({
         classes: "statePlays",
@@ -316,62 +321,95 @@ function Controller() {
         apiName: "Button"
     });
     audioPlayer.addEventListener("change", function(e) {
-        e.state == audioPlayer.STATE_PLAYING ? $.playButton.applyProperties(stateStop) : (e.state == audioPlayer.STATE_PAUSED || e.state == audioPlayer.STATE_STOPPED) && $.playButton.applyProperties(statePlays);
+        if (e.state == audioPlayer.STATE_PLAYING) {
+            $.playButton.applyProperties(stateStop);
+            $.playButton.touchEnabled = true;
+            $.activityIndicator.hide();
+        } else if (e.state == audioPlayer.STATE_PAUSED || e.state == audioPlayer.STATE_STOPPED) {
+            $.playButton.applyProperties(statePlays);
+            $.playButton.touchEnabled = true;
+            $.activityIndicator.hide();
+        }
     });
     var playRadio = function() {
+        $.playButton.touchEnabled = false;
+        $.activityIndicator.show();
         audioPlayer.playing || audioPlayer.paused ? audioPlayer.stop() : audioPlayer.start();
     };
-    var onWinClose = function() {
-        clearInterval(timer);
-        clearInterval(timerPlayed);
-        audioPlayer.stop();
-        "android" === Ti.Platform.osname && audioPlayer.release();
-    };
-    var songTitle = "", newSongTitle = "", position = 0, scoreboardLength = 35;
     var client = Ti.Network.createHTTPClient({
         onload: function() {
             var result = this.responseXML;
             newSongTitle = result.getElementsByTagName("trackList").item(0).getElementsByTagName("track").item(0).getElementsByTagName("title").item(0).textContent;
-            Ti.API.info(newSongTitle);
+            nowPlayingInfo.setTitle(newSongTitle);
             var s = "";
             _.times(scoreboardLength, function() {
                 s += " ";
             });
             newSongTitle = s + newSongTitle;
-            console.log(newSongTitle.length);
         },
         timeout: 1e3
     });
-    var timer = setInterval(function() {
-        if (audioPlayer.playing || audioPlayer.paused) {
-            client.open("GET", Alloy.CFG.now_played_url);
-            client.send();
-        }
-    }, 1e3);
-    var timerPlayed = setInterval(function() {
-        (songTitle !== newSongTitle || position > newSongTitle.length) && (position = 0);
-        $.nowplayed.text = newSongTitle.substr(position, scoreboardLength).toUpperCase();
-        console.log($.nowplayed.text);
-        position++;
-        songTitle = newSongTitle;
-    }, 200);
     var getTweets = function() {
         Alloy.Globals.twitterApi.getTweets(7, function(data) {
             if (data) {
                 var messages = [];
-                for (var i in data) messages.push({
-                    message: {
-                        text: data[i].text
-                    },
-                    date: {
-                        text: Alloy.Globals.Utils.timeAgo(data[i].created_at)
-                    }
-                });
+                for (var i in data) {
+                    console.log(data[i].created_at);
+                    messages.push({
+                        message: {
+                            text: data[i].text
+                        },
+                        date: {
+                            text: Alloy.Globals.Utils.timeAgo(data[i].created_at)
+                        }
+                    });
+                }
                 $.twitterMessages.sections[0].setItems(messages);
             }
         });
     };
-    setInterval(getTweets, 6e4);
+    var startTweets = function() {
+        timerGetTweets = setInterval(getTweets, 6e4);
+    };
+    var startNowPlaying = function() {
+        timerGetNowPlaying = setInterval(function() {
+            if (audioPlayer.playing || audioPlayer.paused) {
+                client.open("GET", Alloy.CFG.now_played_url);
+                client.send();
+            }
+        }, 1e3);
+    };
+    var startMarquee = function() {
+        timerMarquee = setInterval(function() {
+            (songTitle !== newSongTitle || position > newSongTitle.length) && (position = 0);
+            var txt = newSongTitle.substr(position, scoreboardLength).toUpperCase();
+            var s = "";
+            _.times(scoreboardLength - txt.length, function() {
+                s += " ";
+            });
+            $.nowplayed.text = txt + s;
+            position++;
+            songTitle = newSongTitle;
+        }, 200);
+    };
+    var onWinClose = function() {
+        clearInterval(timerGetNowPlaying);
+        clearInterval(timerMarquee);
+        clearInterval(timerGetTweets);
+        audioPlayer.stop();
+        "android" === Ti.Platform.osname && audioPlayer.release();
+    };
+    Ti.App.addEventListener("pause", function() {
+        startTweets();
+        startMarquee();
+    });
+    Ti.App.addEventListener("resume", function() {
+        clearInterval(timerMarquee);
+        clearInterval(timerGetTweets);
+    });
+    startTweets();
+    startMarquee();
+    startNowPlaying();
     getTweets();
     $.index.open();
     __defers["$.__views.index!close!onWinClose"] && $.__views.index.addEventListener("close", onWinClose);

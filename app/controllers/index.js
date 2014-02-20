@@ -1,3 +1,11 @@
+var songTitle = '', 
+	newSongTitle = '', 
+	position = 0, 
+	scoreboardLength = 35,
+	timerGetTweets = null, 
+	timerGetNowPlaying = null, 
+	timerMarquee = null;
+
 if (OS_IOS) {
 	var mediaControls = require("de.codewave.ti.mediacontrols");
 	var mediaControlsView = mediaControls.createView({
@@ -35,7 +43,7 @@ if (OS_IOS) {
 var audioPlayer = Ti.Media.createAudioPlayer({
 	url : Alloy.CFG.radio_url,
 	allowBackground : true,
-	bufferSize : 64532
+	bufferSize : 65535
 });
 
 // dynamic TSS styles
@@ -51,17 +59,23 @@ var stateStop = $.createStyle({
 
 audioPlayer.addEventListener('change', function(e) {
 	if (e.state == audioPlayer.STATE_PLAYING) {
+		
 		$.playButton.applyProperties(stateStop);
-		$.playButton.enabled = true;
+		$.playButton.touchEnabled = true;
+		$.activityIndicator.hide();
+		
 	} else if (e.state == audioPlayer.STATE_PAUSED || e.state == audioPlayer.STATE_STOPPED) {
+		
 		$.playButton.applyProperties(statePlays);
-		$.playButton.enabled = true;
+		$.playButton.touchEnabled = true;
+		$.activityIndicator.hide();
 	}
 });
 
 var playRadio = function() {
 		
-	$.playButton.enabled = false;
+	$.playButton.touchEnabled = false;
+	$.activityIndicator.show();
 	
 	// When paused, playing returns false.
 	// If both are false, playback is stopped.
@@ -75,8 +89,6 @@ var playRadio = function() {
 		audioPlayer.start();
 	}
 };
-
-var songTitle = '', newSongTitle = '', position = 0, scoreboardLength = 35;
 
 var client = Ti.Network.createHTTPClient({
 	onload : function(e) {
@@ -93,7 +105,6 @@ var client = Ti.Network.createHTTPClient({
 			s += " ";
 		});
 		newSongTitle = s + newSongTitle;
-		console.log(newSongTitle.length);
 	},
 	timeout : 1000
 });
@@ -103,6 +114,7 @@ var getTweets = function() {
 		if (data) {
 			var messages = [];
 			for (var i in data) {
+				console.log(data[i].created_at);
 				messages.push({
 					message : {
 						text : data[i].text
@@ -138,8 +150,13 @@ var startMarquee = function() {
 			position = 0;
 		}
 
-		$.nowplayed.text = newSongTitle.substr(position, scoreboardLength).toUpperCase();
-		console.log($.nowplayed.text);
+		var txt = newSongTitle.substr(position, scoreboardLength).toUpperCase();
+		var s = '';
+		_.times(scoreboardLength - txt.length, function() {
+			s += " ";
+		});
+		
+		$.nowplayed.text = txt + s;
 
 		position++;
 		songTitle = newSongTitle;
@@ -178,6 +195,9 @@ if (OS_ANDROID) {
 		clearInterval(timerMarquee);
 		clearInterval(timerGetTweets);
 	});
+	
+	startTweets();
+	startMarquee();
 }
 
 startNowPlaying();

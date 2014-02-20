@@ -1,15 +1,12 @@
 module.exports = {
 
 	daysBetween : function(first, second) {
-		Ti.API.info(first + ' ' + second);
+		
 		try {
-			// Copy date parts of the timestamps, discarding the time parts.
-			var one = new Date(first.getFullYear(), first.getMonth(), first.getDate());
-			var two = new Date(second.getFullYear(), second.getMonth(), second.getDate());
-
+			
 			// Do the maths.
 			var millisecondsPerDay = 1000 * 60 * 60 * 24;
-			var millisBetween = two.getTime() - one.getTime();
+			var millisBetween = second - first;
 			var days = millisBetween / millisecondsPerDay;
 
 			// Round down.
@@ -20,11 +17,10 @@ module.exports = {
 	},
 
 	hoursBetween : function(first, second) {
-		Ti.API.info(first + ' ' + second);
+		
 		try {
-
 			var millisecondsPerHour = 1000 * 60 * 60;
-			var millisBetween = second - first.getTime();
+			var millisBetween = second - first;
 			var hours = millisBetween / millisecondsPerHour;
 
 			// Round down.
@@ -35,9 +31,9 @@ module.exports = {
 	},
 
 	timeAgo : function(time) {
+		
+		var days = this.daysBetween(Date.parse(time), new Date().getTime());
 
-		var days = this.daysBetween(Date.parse(time), Date.today());
-		console.log('days: '+days);
 		if (days == 1) {
 			time = '1 день';
 		} else if (days > 1) {
@@ -45,7 +41,6 @@ module.exports = {
 		} else {
 
 			var hours = this.hoursBetween(Date.parse(time), new Date().getTime());
-			console.log('hours: '+hours);
 			
 			if (hours == 1) {
 				time = '1 час';
