@@ -114,7 +114,7 @@ var getTweets = function() {
 		if (data) {
 			var messages = [];
 			for (var i in data) {
-				console.log(data[i].created_at);
+				// console.log(data[i].created_at);
 				messages.push({
 					message : {
 						text : data[i].text
